@@ -1,0 +1,150 @@
+package com.lockedme;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+
+public class FileUtil {
+	static int count=0;
+	List<MyFile>files=new ArrayList<>();
+
+	public FileUtil()
+	{
+		File f=new File("e;//java");
+		String[] fs=f.list();
+		for(String file:fs)
+		{ 
+			count++;
+			files.add(new MyFile(count,file));
+		}
+		
+		}
+		public List<MyFile> getFiles()
+		{
+			File f=new File("e;//java");
+			String[] fs=f.list();
+		    for(String file:fs)
+			{
+				count++;
+				files.add(new MyFile(count,file));
+			}
+			return files;
+		}
+		public void addFile(String fileName)throws IOException
+		{
+			File f=new File("E;//java//"+fileName+".txt");
+			f.createNewFile();
+		}
+		public boolean deleteFile(String fileName)
+		{
+			boolean isDeleted=false;
+			files=getFiles();
+			for(MyFile file:files) 
+			{
+				if(file.getFileName().startsWith(fileName))
+				{
+					File f=new File("E://java//"+file.getFileName());
+					f.delete();
+					isDeleted=true;
+					break;
+				}}
+			return isDeleted;
+		}
+			public boolean search(String fileName)
+			{
+				boolean isIdentified=false;
+				files=getFiles();
+				for(MyFile file:files)
+				{
+					if(file.getFileName().startsWith(fileName))
+					{
+						isIdentified=true;
+					break;
+					}}
+				return isIdentified;
+			}}
+package com.lockedme;
+
+public class MyFile {
+	private int id;
+	private String fileName;
+	public MyFile() {
+		//TODO Auto-generated constructor stub
+	}
+	public MyFile(int id,String fileName)
+	{
+		super();
+		this.id=id;
+		this.fileName=fileName;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id=id;
+	}
+	public String getFileName() {
+		return fileName;
+		
+	}
+	public void setFileName(String fileName) {
+		this.fileName=fileName;
+	}}
+package com.lockedme;
+import java.io.IOException;
+import java.util.List;
+import java.util.Scanner;
+public class Test {
+	public static void main(String args[] )throws IOException
+	{   
+		FileUtil u = new FileUtil();
+	
+		
+
+		int ch;
+		Scanner sc = new Scanner(System.in);
+		do
+		{
+			System.out.println("1.Add file");
+			System.out.println("2.Delete File");
+			System.out.println("3.Display Files");
+			System.out.println("4.Search");
+			System.out.println("5.Exit");
+			System.out.println("enter the choice");
+			ch=sc.nextInt();
+            switch(ch)
+			{
+			case 1:
+				String fileName;
+				System.out.println("Enter the filename");
+				fileName=sc.next();
+				 u.addFile(fileName);
+				break;
+			case 2:
+			String fileName1;
+			System.out.println("Enter the filename");
+			fileName1=sc.next();
+			 u.deleteFile(fileName1);
+			break;
+			case 3:
+				List<MyFile>files= u.getFiles();
+				for(MyFile f:files)
+					System.out.println(f.getId()+"\t"+ f.getFileName());
+				break;
+			case 4:
+				String fileName2;
+				System.out.println("Enter the filename");
+				fileName2=sc.next();
+				if(u.search(fileName2))
+					System.out.println("File is Existed");
+				else
+					System.out.println("File not existed");
+				break;
+			}}
+			while(ch<5);
+			
+		}}
+
